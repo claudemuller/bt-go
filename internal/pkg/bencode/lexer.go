@@ -25,16 +25,25 @@ func (l *lexer) decode() (interface{}, error) {
 	for l.ch != 0 {
 		switch {
 		case l.ch == 'i':
-			return l.readInt()
+			i, err := l.readInt()
+			fmt.Printf("i %v\n", i)
+
+			return i, err
 
 		case unicode.IsDigit(rune(l.ch)):
-			return l.readStr()
+			i, err := l.readStr()
+			fmt.Printf("s %v\n", i)
+			return i, err
 
 		case l.ch == 'l':
-			return l.readList()
+			i, err := l.readList()
+			fmt.Printf("l %v\n", i)
+			return i, err
 
 		case l.ch == 'd':
-			return l.readDict()
+			i, err := l.readDict()
+			fmt.Printf("d %#v\n", i)
+			return i, err
 
 		default:
 			return "", fmt.Errorf("unsupported type: %c", l.ch)
